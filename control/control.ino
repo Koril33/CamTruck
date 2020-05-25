@@ -58,6 +58,16 @@ void goForward(int _pwm1, int _pwm2) {
     digitalWrite(input4, HIGH);
 }
 
+void goBack(int _pwm1, int _pwm2) {
+    analogWrite(pwm1, _pwm1);
+    analogWrite(pwm2, _pwm2);
+
+    digitalWrite(input1, HIGH);
+    digitalWrite(input2, LOW);
+    digitalWrite(input3, HIGH);
+    digitalWrite(input4, LOW);
+}
+
 void goRight(int _pwm1, int _pwm2) {
     analogWrite(pwm1, _pwm1);
     analogWrite(pwm2, _pwm2);
@@ -86,7 +96,7 @@ void motorRun(int _Cmd) {
       break;
     
     case TURNRIGHT:
-      goRight(120, 120);
+      goRight(150, 150);
       break;
     
     case TURNRIGHTLITTLE:
@@ -94,7 +104,7 @@ void motorRun(int _Cmd) {
       break;
 
     case TURNLEFT:
-      goLeft(120, 120);
+      goLeft(150, 150);
       break;
 
     case TURNLEFTLITTLE:
@@ -105,6 +115,10 @@ void motorRun(int _Cmd) {
     case FORWARD:
       goForward(120, 120);
       break;
+
+    case BACKWARD:
+      goBack(120, 120);
+      break;    
   }
 }
 
@@ -235,6 +249,13 @@ void loop()
       motorRun(FORWARD);
       delay(1000);
     }
+
+    else if(msg == 'b') {
+      Serial.println("BACK");
+      motorRun(BACKWARD);
+      delay(1000);
+    }
+    
     else if(msg == 's') {
       Serial.println("STOP");
       motorRun(STOP);
